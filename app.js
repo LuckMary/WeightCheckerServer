@@ -21,7 +21,9 @@ app.get("/hello", (req, res) => {
 app.get("/weights", (req, res) => {
   const userId = req.query.userId;
   res.json({
-    weights: weights.filter((item) => item.userId === userId),
+    weights: userId
+      ? weights.filter((item) => item.userId === userId)
+      : weights,
   });
 });
 
