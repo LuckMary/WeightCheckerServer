@@ -19,27 +19,32 @@ app.get("/hello", (req, res) => {
 });
 
 app.get("/weights", (req, res) => {
+  const userId = req.query.userId;
   res.json({
-    weights,
+    weights: weights.filter((item) => item.userId === userId),
   });
 });
 
 app.post("/weights", (req, res) => {
   const text = req.body.text;
+  const userId = req.query.userId;
 
   const key = Math.random();
 
-  weights = [{ text, key }, ...weights];
+  weights = [{ text, key, userId }, ...weights];
 
   res.json({
-    weight: { text, key },
+    weight: { text, key, userId },
   });
 });
 
 app.delete("/weights/:key", (req, res) => {
   const key = +req.params.key;
+  const userId = req.query.userId;
 
-  const weight = weights.find((item) => key === item.key);
+  const weight = weights.find(
+    (item) => key === item.key && userId === item.userId
+  );
   weights = weights.filter((item) => key !== item.key);
   res.json({
     weight,
