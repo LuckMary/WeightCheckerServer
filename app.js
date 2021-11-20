@@ -27,10 +27,12 @@ app.get("/weights", (req, res) => {
 app.post("/weights", (req, res) => {
   const text = req.body.text;
 
-  weights = [{ text, key: Math.random() }, ...weights];
+  const key = Math.random();
+
+  weights = [{ text, key }, ...weights];
 
   res.json({
-    weight: { text, key: Math.random() },
+    weight: { text, key },
   });
 });
 
